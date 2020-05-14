@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jzkj.gyxg.mapper.GoodsMapper" >
+  <resultMap id="BaseResultMap" type="com.jzkj.gyxg.entity.Goods" >
+    <id column="goodsid" property="goodsid" jdbcType="INTEGER" />
+    <result column="companyid" property="companyid" jdbcType="INTEGER" />
+    <result column="storeid" property="storeid" jdbcType="INTEGER" />
+    <result column="classifyid" property="classifyid" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="specs" property="specs" jdbcType="VARCHAR" />
+    <result column="unit" property="unit" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="pinyin" property="pinyin" jdbcType="VARCHAR" />
+    <result column="maxstock" property="maxstock" jdbcType="DECIMAL" />
+    <result column="minstock" property="minstock" jdbcType="DECIMAL" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    goodsid, companyid, storeid, classifyid, code, name, specs, unit, price, pinyin, 
+    maxstock, minstock, status
+  </sql>
+</mapper>

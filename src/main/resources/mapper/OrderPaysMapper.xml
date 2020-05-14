@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jzkj.gyxg.mapper.OrderPaysMapper" >
+  <resultMap id="BaseResultMap" type="com.jzkj.gyxg.entity.OrderPays" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="orderid" property="orderid" jdbcType="INTEGER" />
+    <result column="payid" property="payid" jdbcType="INTEGER" />
+    <result column="oktime" property="oktime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, orderid, payid, oktime, status
+  </sql>
+
+
+</mapper>

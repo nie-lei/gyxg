@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jzkj.gyxg.mapper.PurchaseSlavesMapper" >
+  <resultMap id="BaseResultMap" type="com.jzkj.gyxg.entity.PurchaseSlaves" >
+    <id column="slaveid" property="slaveid" jdbcType="INTEGER" />
+    <result column="purchaseid" property="purchaseid" jdbcType="INTEGER" />
+    <result column="goodsid" property="goodsid" jdbcType="INTEGER" />
+    <result column="amount" property="amount" jdbcType="DECIMAL" />
+    <result column="unit" property="unit" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="totalmoney" property="totalmoney" jdbcType="DECIMAL" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    slaveid, purchaseid, goodsid, amount, unit, price, totalmoney, memo
+  </sql>
+
+  <select id="findByPurchaseIdAndGoodsId" resultMap="BaseResultMap" parameterType="com.jzkj.gyxg.entity.PurchaseSlaves" >
+    select 
+    <include refid="Base_Column_List" />
+    from gyxg_purchase_slaves
+    where goodsid = #{goodsid,jdbcType=INTEGER} AND purchaseid = #{purchaseid,jdbcType=INTEGER}
+  </select>
+
+</mapper>

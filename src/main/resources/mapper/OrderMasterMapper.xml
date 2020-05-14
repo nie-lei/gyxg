@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jzkj.gyxg.mapper.OrderMasterMapper" >
+  <resultMap id="BaseResultMap" type="com.jzkj.gyxg.entity.OrderMaster" >
+    <id column="orderid" property="orderid" jdbcType="INTEGER" />
+    <result column="companyid" property="companyid" jdbcType="INTEGER" />
+    <result column="storeid" property="storeid" jdbcType="INTEGER" />
+    <result column="customerid" property="customerid" jdbcType="INTEGER" />
+    <result column="tableid" property="tableid" jdbcType="INTEGER" />
+    <result column="canduan" property="canduan" jdbcType="VARCHAR" />
+    <result column="nums" property="nums" jdbcType="INTEGER" />
+    <result column="ordertime" property="ordertime" jdbcType="TIMESTAMP" />
+    <result column="amountmoney" property="amountmoney" jdbcType="DECIMAL" />
+    <result column="seatsfee" property="seatsfee" jdbcType="DECIMAL" />
+    <result column="tablefee" property="tablefee" jdbcType="DECIMAL" />
+    <result column="totalmoney" property="totalmoney" jdbcType="DECIMAL" />
+    <result column="isall" property="isall" jdbcType="VARCHAR" />
+    <result column="discountratio" property="discountratio" jdbcType="DECIMAL" />
+    <result column="discountamount" property="discountamount" jdbcType="DECIMAL" />
+    <result column="payamount" property="payamount" jdbcType="DECIMAL" />
+    <result column="alsoypay" property="alsoypay" jdbcType="DECIMAL" />
+    <result column="overtime" property="overtime" jdbcType="TIMESTAMP" />
+    <result column="employeeid" property="employeeid" jdbcType="INTEGER" />
+    <result column="employee1id" property="employee1id" jdbcType="INTEGER" />
+    <result column="overtype" property="overtype" jdbcType="VARCHAR" />
+    <result column="flag" property="flag" jdbcType="VARCHAR" />
+    <result column="tableids" property="tableids" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+    <result column="sendtype" property="sendtype" jdbcType="VARCHAR" />
+    <result column="ismultiple" property="ismultiple" jdbcType="INTEGER" />
+    <result column="discountid" property="discountid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    orderid, companyid, storeid, customerid, tableid, canduan, nums, ordertime, amountmoney, 
+    seatsfee, tablefee, totalmoney, isall, discountratio, discountamount, payamount, 
+    alsoypay, overtime, employeeid, employee1id, overtype, flag, tableids, status, memo, 
+    sendtype, ismultiple
+  </sql>
+
+  <!-- 查询连台的所有订单，根据tableids -->
+  <select id="selectBytablesids" parameterType="com.jzkj.gyxg.entity.OrderMaster" resultType="com.jzkj.gyxg.entity.OrderMaster">
+    select <include refid="Base_Column_List"/> from gyxg_orders_master
+    where
+      companyid=#{companyid}
+      and storeid=#{storeid}
+      and flag ='2'
+      and status in ('0','1') and tableids=#{tableids}
+  </select>
+  <!-- 通过开台类型和结算状态查询是否付款 -->
+  <select id="findOrderMasterByType" parameterType="com.jzkj.gyxg.entity.OrderMaster" resultType="com.jzkj.gyxg.entity.OrderMaster">
+    select <include refid="Base_Column_List"/> from gyxg_orders_master
+    where
+    companyid=#{companyid}
+    and storeid=#{storeid}
+    and ismultiple =#{ismultiple}
+    and tableids=#{tableids}
+  </select>
+
+</mapper>

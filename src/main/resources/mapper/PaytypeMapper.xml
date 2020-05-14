@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jzkj.gyxg.mapper.PaytypeMapper">
+  <resultMap id="BaseResultMap" type="com.jzkj.gyxg.entity.Paytype">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="companyid" jdbcType="INTEGER" property="companyid" />
+    <result column="storeid" jdbcType="INTEGER" property="storeid" />
+    <result column="paycode" jdbcType="INTEGER" property="paycode" />
+    <result column="payname" jdbcType="VARCHAR" property="payname" />
+    <result column="isquan" jdbcType="VARCHAR" property="isquan" />
+    <result column="quanmoney" jdbcType="DECIMAL" property="quanmoney" />
+    <result column="discountmoney" jdbcType="DECIMAL" property="discountmoney" />
+    <result column="minmoney" jdbcType="DECIMAL" property="minmoney" />
+    <result column="quannum" jdbcType="INTEGER" property="quannum" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, companyid, storeid, paycode, payname, isquan, quanmoney, discountmoney, minmoney, 
+    quannum, status
+  </sql>
+
+  <!-- 查询支付类型列表 -->
+  <select id="findPayTypeList" parameterType="com.jzkj.gyxg.entity.Paytype" resultType="com.jzkj.gyxg.entity.Paytype">
+    select <include refid="Base_Column_List"></include> from gyxg_paytype
+    where companyid=#{companyid} and storeid=#{storeid} and status='0' and isquan=#{isquan}
+  </select>
+
+</mapper>

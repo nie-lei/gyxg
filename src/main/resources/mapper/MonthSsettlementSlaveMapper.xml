@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jzkj.gyxg.mapper.MonthSsettlementSlaveMapper" >
+  <resultMap id="BaseResultMap" type="com.jzkj.gyxg.entity.MonthSsettlementSlave" >
+    <id column="settlementid" property="settlementid" jdbcType="INTEGER" />
+    <id column="goodsid" property="goodsid" jdbcType="INTEGER" />
+    <id column="warehouseid" property="warehouseid" jdbcType="INTEGER" />
+    <result column="unit" property="unit" jdbcType="VARCHAR" />
+    <result column="stock" property="stock" jdbcType="DECIMAL" />
+    <result column="stockamount" property="stockamount" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    settlementid, goodsid, warehouseid, unit, stock, stockamount
+  </sql>
+
+</mapper>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <context id="mysqlgenerator" targetRuntime="MyBatis3Simple" >
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <property name="suppressAllComments" value="true" />
+        </commentGenerator>
+
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://106.12.221.18:3306/gyxg_huoge"
+                        userId="Jzkj_tgcx"
+                        password="Tgcx_123@45k6" />
+
+        <javaModelGenerator targetPackage="com.jzkj.gyxg.entity" targetProject="src/main/java">
+            <property name="rootClass" value="com.jzkj.gyxg.entity.BaseEntity"/>
+        </javaModelGenerator>
+
+
+        <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="com.jzkj.gyxg.mapper" targetProject="src/main/java" />
+
+
+        <!--<table tableName="gyxg_companys" domainObjectName="Companys">-->
+            <!--<generatedKey column="companyid" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+
+        <!--<table tableName="gyxg_dishe_classifys" domainObjectName="DishesClassfys">-->
+            <!--<generatedKey column="classifyid" sqlStatement="MySql" identity="true"/>-->
+        <table tableName="gyxg_customers_logs" domainObjectName="CustomersLogs">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+
+        <!--<table tableName="gyxg_payrecords" domainObjectName="PayRecords">-->
+            <!--<generatedKey column="payid" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+
+
+        <!--<table tableName="gyxg_orderflag2_records" domainObjectName="OrderFlag2Records">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+
+        <!--<table tableName="gyxg_goods" domainObjectName="Goods">-->
+            <!--<generatedKey column="goodsid" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+
+
+        <!--<table tableName="gyxg_employee_log" domainObjectName="Employeelog">-->
+            <!--<generatedKey column="logid" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+
+        <!--<table tableName="gyxg_employees" domainObjectName="Employees">-->
+            <!--<generatedKey column="employeeid" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+
+        <!--<table tableName="gyxg_menu" domainObjectName="Menu">-->
+            <!--<generatedKey column="menuid" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+
+        <!--<table tableName="gyxg_positions" domainObjectName="Positions">-->
+            <!--<generatedKey column="positionid" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+
+
+
+        <!--<table tableName="gyxg_stores" domainObjectName="Stores">-->
+            <!--<generatedKey column="storeid" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+
+        <!--<table tableName="gyxg_role_menu" domainObjectName="RoleMenu">-->
+            <!--<generatedKey column="roleid" sqlStatement="MySql" identity="false"/>-->
+        <!--</table>-->
+
+
+
+
+
+        <!--<table tableName="gyxg_roles" domainObjectName="Roles">-->
+            <!--<generatedKey column="roleid" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+    </context>
+</generatorConfiguration>

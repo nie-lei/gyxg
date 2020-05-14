@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jzkj.gyxg.mapper.MonthSeettlementMasterMapper" >
+  <resultMap id="BaseResultMap" type="com.jzkj.gyxg.entity.MonthSeettlementMaster" >
+    <id column="settlementid" property="settlementid" jdbcType="INTEGER" />
+    <result column="companyid" property="companyid" jdbcType="INTEGER" />
+    <result column="storeid" property="storeid" jdbcType="INTEGER" />
+    <result column="employeeid" property="employeeid" jdbcType="INTEGER" />
+    <result column="intime" property="intime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    settlementid, companyid, storeid, employeeid, intime
+  </sql>
+
+</mapper>

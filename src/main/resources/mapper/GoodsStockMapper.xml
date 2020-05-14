@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jzkj.gyxg.mapper.GoodsStockMapper" >
+  <resultMap id="BaseResultMap" type="com.jzkj.gyxg.entity.GoodsStock" >
+    <id column="goodsstockid" property="goodsstockid" jdbcType="INTEGER" />
+    <result column="companyid" property="companyid" jdbcType="INTEGER" />
+    <result column="storeid" property="storeid" jdbcType="INTEGER" />
+    <result column="goodsid" property="goodsid" jdbcType="INTEGER" />
+    <result column="warehouseid" property="warehouseid" jdbcType="INTEGER" />
+    <result column="unit" property="unit" jdbcType="VARCHAR" />
+    <result column="ycstock" property="ycstock" jdbcType="DECIMAL" />
+    <result column="stock" property="stock" jdbcType="DECIMAL" />
+    <result column="lasttime" property="lasttime" jdbcType="TIMESTAMP" />
+    <result column="stockamount" property="stockamount" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    goodsstockid, companyid, storeid, goodsid, warehouseid, unit, ycstock, stock, lasttime, 
+    stockamount
+  </sql>
+
+  <select id="findGoodsStockByGoodsId" parameterType="java.lang.Integer" resultType="java.util.Map">
+    SELECT s.unit,s.stockamount,s.stock,g.specs FROM gyxg_goods_stock s LEFT JOIN  gyxg_goods g ON  s.goodsid=g.goodsid WHERE g.goodsid=#{goodsid}
+  </select>
+
+  <update id="updateByPrimaryKey" parameterType="com.jzkj.gyxg.entity.GoodsStock" >
+    update gyxg_goods_stock
+    <set >
+      <if test="companyid != null" >
+        companyid = #{companyid,jdbcType=INTEGER},
+      </if>
+      <if test="storeid != null" >
+        storeid = #{storeid,jdbcType=INTEGER},
+      </if>
+      <if test="goodsid != null" >
+        goodsid = #{goodsid,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseid != null" >
+        warehouseid = #{warehouseid,jdbcType=INTEGER},
+      </if>
+      <if test="unit != null" >
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="ycstock != null" >
+        ycstock = #{ycstock,jdbcType=DECIMAL},
+      </if>
+      <if test="stock != null" >
+        stock = #{stock,jdbcType=DECIMAL},
+      </if>
+      <if test="lasttime != null" >
+        lasttime = #{lasttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stockamount != null" >
+        stockamount = #{stockamount,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where goodsstockid = #{goodsstockid,jdbcType=INTEGER}
+  </update>
+</mapper>
