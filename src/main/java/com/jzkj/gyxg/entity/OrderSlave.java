@@ -1,6 +1,9 @@
 package com.jzkj.gyxg.entity;
 
 
+import org.apache.ibatis.type.JdbcType;
+import tk.mybatis.mapper.annotation.ColumnType;
+
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Date;
@@ -21,7 +24,8 @@ public class OrderSlave extends BaseEntity {
 
     private Integer amount;
 
-    private double price;
+    @ColumnType(column = "`price`",jdbcType = JdbcType.DOUBLE)
+    private Double price;
 
     private String memo;
 
@@ -119,11 +123,11 @@ public class OrderSlave extends BaseEntity {
         this.amount = amount;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

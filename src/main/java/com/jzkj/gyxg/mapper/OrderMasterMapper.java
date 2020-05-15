@@ -162,16 +162,17 @@ public interface OrderMasterMapper extends Mapper<OrderMaster> {
     @Select("SELECT\n" +
             "\ta.orderid,a.tableid,\n" +
             "a.memo,a.sendtype," +
-            "\tIFNULL((SELECT SUM(amountmoney) as amountmoney  from (\n" +
-            "SELECT\n" +
-            "\tSUM(e.amount) * e.price  as amountmoney\n" +
-            "FROM\n" +
-            "\tgyxg_orders_slave e \n" +
-            "WHERE\n" +
-            "\te.flag IN ('0', '2')\n" +
-            "AND e.`status` IN ('0', '1')\n" +
-            "AND e.orderid =a.orderid GROUP BY e.disheid\n" +
-            ") t ) ,0) as amountmoney,\n" +
+//            "\tIFNULL((SELECT SUM(amountmoney) as amountmoney  from (\n" +
+//            "SELECT\n" +
+//            "\tSUM(e.amount) * e.price  as amountmoney\n" +
+//            "FROM\n" +
+//            "\tgyxg_orders_slave e \n" +
+//            "WHERE\n" +
+//            "\te.flag IN ('0', '2')\n" +
+//            "AND e.`status` IN ('0', '1')\n" +
+//            "AND e.orderid =a.orderid GROUP BY e.disheid\n" +
+//            ") t ) ,0) as amountmoney,\n" +
+            "\t a.amountmoney,\n" +
             " IFNULL((select sum(d.amount) from gyxg_orders_slave d where d.orderid=a.orderid and d.flag in ('0','2') and d.status in ('0','1')),0) as dishecount,\n" +
             "\ta.ordertime,\n" +
             "\tb.`code`,\n" +
@@ -238,16 +239,17 @@ public interface OrderMasterMapper extends Mapper<OrderMaster> {
     @Select("SELECT\n" +
             "\ta.orderid,a.tableid,\n" +
             "a.memo,a.sendtype," +
-            "\tIFNULL((SELECT SUM(amountmoney) as amountmoney  from (\n" +
-            "SELECT\n" +
-            "\tSUM(e.amount) * e.price  as amountmoney\n" +
-            "FROM\n" +
-            "\tgyxg_orders_slave e \n" +
-            "WHERE\n" +
-            "\te.flag IN ('0', '2')\n" +
-            "AND e.`status` IN ('0', '1')\n" +
-            "AND e.orderid =a.orderid GROUP BY e.disheid\n" +
-            ") t ) ,0) as amountmoney,\n" +
+//            "\tIFNULL((SELECT SUM(amountmoney) as amountmoney  from (\n" +
+//            "SELECT\n" +
+//            "\tSUM(e.amount) * e.price  as amountmoney\n" +
+//            "FROM\n" +
+//            "\tgyxg_orders_slave e \n" +
+//            "WHERE\n" +
+//            "\te.flag IN ('0', '2')\n" +
+//            "AND e.`status` IN ('0', '1')\n" +
+//            "AND e.orderid =a.orderid GROUP BY e.disheid\n" +
+//            ") t ) ,0) as amountmoney,\n" +
+            "\ta.amountmoney,\n" +
             "IFNULL((select sum(d.amount) from gyxg_orders_slave d where d.orderid=a.orderid and d.flag in ('0','2') and d.status in('0','1')),0) as dishecount,\n" +
             "\ta.ordertime,\n" +
             "\tb.`code`,\n" +

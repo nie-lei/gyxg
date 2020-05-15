@@ -643,7 +643,7 @@ public class OrderService {
             slave.setFlag(map.get("flag")+"");
             slave.setEmployeeid(empid);
 
-            double amoney = (dishe.getPrice())*((Integer) map.get("amount"));
+            double amoney = NumberUtil.mul(dishe.getPrice(),(double)map.get("amount"));
             if("0".equals(slave.getFlag())){//点菜
 
             }else if("1".equals(slave.getFlag())){//赠菜
@@ -2315,7 +2315,7 @@ public class OrderService {
                 throw new AjaxOperationFailException("此菜已全部退，不能再退！");
             }
 //            master.setAmountmoney(master.getAmountmoney()-(count*slave.getPrice()));
-            Double amountMoney = NumberUtil.mul(count.doubleValue(),slave.getPrice());
+            Double amountMoney = NumberUtil.mul(count.doubleValue(),slave.getPrice().doubleValue());
             master.setAmountmoney(NumberUtil.sub(master.getAmountmoney(),amountMoney));//点菜总金额
             master.setTotalmoney(NumberUtil.sub(master.getTotalmoney(),slave.getRealamount()));//消费总金额减去
             //重新计算，先用付款金额出去
