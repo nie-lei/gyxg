@@ -248,6 +248,7 @@ public class EmployeeService {
         employees.setName(name);
         employees.setPhone(phone);
         employees.setEmployeeno(employeeno);
+        employees.setDiscountamount(0.0);
         employees.setOpentime(new Date());
         employees.setPositionid(positionid);
         employees.setRoleid(roleid);

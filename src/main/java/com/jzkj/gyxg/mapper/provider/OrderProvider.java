@@ -55,7 +55,7 @@ public class OrderProvider {
             sql.append(" and a.overtype='"+params.get("overtype")+"'");
         }
         if(params.containsKey("employee1id")){//筛选当前登录人
-            sql.append(" and a.employeeid ="+params.get("employee1id"));
+            sql.append(" and a.employee1id ="+params.get("employee1id"));
         }
         if(params.containsKey("code")){
             sql.append(" and b.code like '%"+params.get("code")+"%'");

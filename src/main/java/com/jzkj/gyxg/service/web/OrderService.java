@@ -643,7 +643,7 @@ public class OrderService {
             slave.setFlag(map.get("flag")+"");
             slave.setEmployeeid(empid);
 
-            double amoney = NumberUtil.mul(dishe.getPrice(),(double)map.get("amount"));
+            double amoney = NumberUtil.mul(dishe.getPrice(),Double.valueOf((Integer)map.get("amount")).doubleValue());
             if("0".equals(slave.getFlag())){//点菜
 
             }else if("1".equals(slave.getFlag())){//赠菜
@@ -961,13 +961,14 @@ public class OrderService {
         if(orderid == 0){
             throw new AjaxOperationFailException("订单id缺失!");
         }
-        OrderMaster master = orderMasterMapper.selectByPrimaryId(orderid);
+//        OrderMaster master = orderMasterMapper.selectByPrimaryId(orderid);
+        OrderMaster master = orderMasterMapper.selectByPrimaryKey(orderid);
         if( master == null ){
             throw new AjaxOperationFailException("订单信息不存在!");
         }
         if(!orderIsSettle(master)){//没结过账
             Double discountratio = master.getDiscountratio();
-            if(master.getDiscountratio()!=0.00){
+            if(master.getDiscountratio()==0.00){
                 discountratio = 1.0;
             }
             getAndUpdateOrderMasterByDicount(discountratio,master.getIsall(),1,master);
@@ -1529,6 +1530,8 @@ public class OrderService {
             master.setAlsoypay(NumberUtil.sub(master.getAlsoypay(),payamount));
             orderMasterMapper.updateByPrimaryKeySelective(master);
         }
+        master.setOvertime(new Date());
+        orderMasterMapper.updateByPrimaryKeySelective(master);
 
         if(master.getAlsoypay()<=0){
             //结账完成,修改开台状态
@@ -1536,8 +1539,6 @@ public class OrderService {
             createOrderdetailinfo(orderid);
             resp.setData(1);
         }
-        master.setOvertime(new Date());
-        orderMasterMapper.updateByPrimaryKeySelective(master);
         resp.setMsg("支付成功！");
         return resp;
     }
@@ -2317,7 +2318,7 @@ public class OrderService {
 //            master.setAmountmoney(master.getAmountmoney()-(count*slave.getPrice()));
             Double amountMoney = NumberUtil.mul(count.doubleValue(),slave.getPrice().doubleValue());
             master.setAmountmoney(NumberUtil.sub(master.getAmountmoney(),amountMoney));//点菜总金额
-            master.setTotalmoney(NumberUtil.sub(master.getTotalmoney(),slave.getRealamount()));//消费总金额减去
+            master.setTotalmoney(NumberUtil.sub(master.getTotalmoney(),amountMoney));//消费总金额减去
             //重新计算，先用付款金额出去
             Double dis = master.getDiscountratio();
             Double realamount = amountMoney;
@@ -2327,14 +2328,16 @@ public class OrderService {
             master.setPayamount(NumberUtil.sub(master.getPayamount(),realamount));//应付金额
             master.setAlsoypay(NumberUtil.sub(master.getAlsoypay(),realamount));//未付款减去
             OrderSlave slavenew = slave;
+            slavenew.setId(null);
             slavenew.setFlag("2");
             slavenew.setAmount(-count);
             slavenew.setMemo(memo);
             slavenew.setRealamount(-realamount);
+            slavenew.setOrderamount(-amountMoney);//点菜金额
 
+            int i = orderSlaveMapper.insertSelective(slavenew);//保存新的记录
             orderSlaves.add(slavenew);//添加到list用作保存打印信息
 
-            int i = orderSlaveMapper.insert1(slavenew);//保存新的记录
             Dishes dishe = dishesMapper.selectByPrimaryKey(slave.getDisheid());
             if(dishe.getIsGoods().equals("1")){
                 if(dishe.getIsAuto().equals("1")){//自动销售

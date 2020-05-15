@@ -1277,7 +1277,6 @@ public class AppUserService extends BaseService {
 //                        tables.setFlag("0");
 //                        tablesMapper.updateByPrimaryId(tables);
                         orderService.updateMasterAndTables(orderMaster, orderMaster.getIsmultiple() == null ? 1: orderMaster.getIsmultiple());
-                        orderService.createOrderdetailinfo(orderMaster.getOrderid());
                         //2。修改订单状态为结账
                         orderMaster.setStatus("3");
                         orderMasterMapper.updateByPrimaryId(orderMaster);
@@ -1308,6 +1307,8 @@ public class AppUserService extends BaseService {
                         orderPrintMaster.setStatus("0");
                         orderPrintMaster.setType("3");
                         orderPrintMasterMapper.insert(orderPrintMaster);
+                        //存储过程数据汇总
+                        orderService.createOrderdetailinfo(orderMaster.getOrderid());
                     } else if("PAY_CANCELED".equals(result.get("order_status") + "")) {
                         payRecords = payRecordsMapper.selectByPayNo(payNo);
                         if (payRecords == null || !"0".equals(payRecords.getStatus())) {
