@@ -1,15 +1,8 @@
 package com.jzkj.gyxg.entity;
 
-
-import org.apache.ibatis.type.JdbcType;
-import tk.mybatis.mapper.annotation.ColumnType;
-
-import javax.persistence.Id;
-import javax.persistence.Table;
 import java.util.Date;
-@Table(name = "gyxg_orders_slave")
+
 public class OrderSlave extends BaseEntity {
-    @Id
     private Integer id;
 
     private Integer orderid;
@@ -24,8 +17,11 @@ public class OrderSlave extends BaseEntity {
 
     private Integer amount;
 
-    @ColumnType(column = "`price`",jdbcType = JdbcType.DOUBLE)
     private Double price;
+
+    private Double orderamount;
+
+    private Double realamount;
 
     private String memo;
 
@@ -33,39 +29,11 @@ public class OrderSlave extends BaseEntity {
 
     private Integer employeeid;
 
+    private Date intime;
+
     private String state;
 
     private String status;
-
-    private Double orderamount;//点菜金额
-
-    private Double realamount;//结账金额
-
-    private Date intime;//点菜时间
-
-    public Double getOrderamount() {
-        return orderamount;
-    }
-
-    public void setOrderamount(Double orderamount) {
-        this.orderamount = orderamount;
-    }
-
-    public Double getRealamount() {
-        return realamount;
-    }
-
-    public void setRealamount(Double realamount) {
-        this.realamount = realamount;
-    }
-
-    public Date getIntime() {
-        return intime;
-    }
-
-    public void setIntime(Date intime) {
-        this.intime = intime;
-    }
 
     public Integer getId() {
         return id;
@@ -131,6 +99,22 @@ public class OrderSlave extends BaseEntity {
         this.price = price;
     }
 
+    public Double getOrderamount() {
+        return orderamount;
+    }
+
+    public void setOrderamount(Double orderamount) {
+        this.orderamount = orderamount;
+    }
+
+    public Double getRealamount() {
+        return realamount;
+    }
+
+    public void setRealamount(Double realamount) {
+        this.realamount = realamount;
+    }
+
     public String getMemo() {
         return memo;
     }
@@ -155,6 +139,14 @@ public class OrderSlave extends BaseEntity {
         this.employeeid = employeeid;
     }
 
+    public Date getIntime() {
+        return intime;
+    }
+
+    public void setIntime(Date intime) {
+        this.intime = intime;
+    }
+
     public String getState() {
         return state;
     }
@@ -169,11 +161,5 @@ public class OrderSlave extends BaseEntity {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public static void main(String[] args) {
-        OrderSlave OrderSlave = new OrderSlave();
-        OrderSlave.setAmount(-1);
-        System.out.println(OrderSlave);
     }
 }

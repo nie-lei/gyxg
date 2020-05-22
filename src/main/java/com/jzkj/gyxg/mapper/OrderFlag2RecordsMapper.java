@@ -65,4 +65,12 @@ public interface OrderFlag2RecordsMapper {
 
     @Select("select count(0) from gyxg_orderflag2_records where orderid=#{orderid}")
     int selectCountByOrderid(Integer orderid);
+
+    @Select("select " +
+            "id, orderid, otherorderid " +
+            "from gyxg_orderflag2_records " +
+            "where otherorderid like '${orderid},%' " +
+            "or otherorderid like '%,${orderid},%' " +
+            "or otherorderid like '%,${orderid}'")
+    OrderFlag2Records selectInfoByOrderid(@Param("orderid") Integer orderid);
 }

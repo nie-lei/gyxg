@@ -672,4 +672,31 @@ public class ReportService {
         list.add(lastmap);
         return new ResponseJson(list);
     }
+
+    public ResponseJson invoicing() throws AjaxOperationFailException {
+        String begin_date = HttpRequestParamter.getString("begin_date",true);
+        String end_date = HttpRequestParamter.getString("end_date",true);
+        Integer warehouseid = HttpRequestParamter.getInt("warehouseid", 0);
+
+        if (StringUtil.isNull(begin_date) || StringUtil.isNull(end_date)) {
+            throw new AjaxOperationFailException("请选择时间段");
+        }
+        if (warehouseid == 0) {
+            warehouseid = null;
+        }
+
+        Employees employees = employeeService.getLoginUser();
+        int companyid = employees.getCompanyid();
+        int storeid = employees.getStoreid();
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("companyid", companyid);
+        map.put("storeid", storeid);
+        map.put("warehouseid", warehouseid);
+        map.put("begin_date", begin_date);
+        map.put("end_date", end_date);
+        List<Map<String, Object>> list = reportMapper.invoicing(map);
+
+        return new ResponseJson(list);
+
+    }
 }

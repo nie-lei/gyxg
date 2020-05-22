@@ -1,55 +1,58 @@
 package com.jzkj.gyxg.mapper;
 
 import com.jzkj.gyxg.entity.OrderMaster;
-import java.util.List;
-import java.util.Map;
-
 import com.jzkj.gyxg.mapper.provider.CustomersProvider;
 import com.jzkj.gyxg.mapper.provider.OrderProvider;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
-import tk.mybatis.mapper.common.Mapper;
 
-public interface OrderMasterMapper extends Mapper<OrderMaster> {
+import java.util.List;
+import java.util.Map;
+
+public interface OrderMasterMapper {
     @Delete({
         "delete from gyxg_orders_master",
         "where orderid = #{orderid,jdbcType=INTEGER}"
     })
-    int deleteByPrimaryId(Integer orderid);
+    int deleteByPrimaryKey(Integer orderid);
 
     @Insert({
         "insert into gyxg_orders_master (companyid, storeid, ",
         "customerid, tableid, ",
         "canduan, nums, ordertime, ",
         "amountmoney, seatsfee, ",
-        "tablefee, totalmoney,isall, ",
+        "tablefee, totalmoney, ",
+        "discountid, isall, ",
         "discountratio, discountamount, ",
         "payamount, alsoypay, ",
         "overtime, employeeid, ",
         "employee1id, overtype, ",
         "flag, tableids, ",
-        "status, memo, sendtype, ismultiple)",
+        "status, memo, sendtype, ",
+        "ismultiple)",
         "values (#{companyid,jdbcType=INTEGER}, #{storeid,jdbcType=INTEGER}, ",
         "#{customerid,jdbcType=INTEGER}, #{tableid,jdbcType=INTEGER}, ",
         "#{canduan,jdbcType=VARCHAR}, #{nums,jdbcType=INTEGER}, #{ordertime,jdbcType=TIMESTAMP}, ",
         "#{amountmoney,jdbcType=DECIMAL}, #{seatsfee,jdbcType=DECIMAL}, ",
-        "#{tablefee,jdbcType=DECIMAL}, #{totalmoney,jdbcType=DECIMAL}, #{isall,jdbcType=VARCHAR},",
+        "#{tablefee,jdbcType=DECIMAL}, #{totalmoney,jdbcType=DECIMAL}, ",
+        "#{discountid,jdbcType=INTEGER}, #{isall,jdbcType=VARCHAR}, ",
         "#{discountratio,jdbcType=DECIMAL}, #{discountamount,jdbcType=DECIMAL}, ",
         "#{payamount,jdbcType=DECIMAL}, #{alsoypay,jdbcType=DECIMAL}, ",
         "#{overtime,jdbcType=TIMESTAMP}, #{employeeid,jdbcType=INTEGER}, ",
         "#{employee1id,jdbcType=INTEGER}, #{overtype,jdbcType=VARCHAR}, ",
         "#{flag,jdbcType=VARCHAR}, #{tableids,jdbcType=VARCHAR}, ",
-        "#{status,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR}, #{sendtype,jdbcType=VARCHAR}, #{ismultiple,jdbcType=INTEGER})"
+        "#{status,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR}, #{sendtype,jdbcType=VARCHAR}, ",
+        "#{ismultiple,jdbcType=INTEGER})"
     })
     @SelectKey(statement="SELECT LAST_INSERT_ID()", keyProperty="orderid", before=false, resultType=Integer.class)
-    int insert1(OrderMaster record);
+    int insert(OrderMaster record);
 
     @Select({
         "select",
         "orderid, companyid, storeid, customerid, tableid, canduan, nums, ordertime, ",
-        "amountmoney, seatsfee, tablefee, totalmoney, discountratio, discountamount, ",
-        "payamount, alsoypay, overtime, employeeid, employee1id, overtype, flag,isall, tableids, ",
-        "status, memo, sendtype, ismultiple ,discountid",
+        "amountmoney, seatsfee, tablefee, totalmoney, discountid, isall, discountratio, ",
+        "discountamount, payamount, alsoypay, overtime, employeeid, employee1id, overtype, ",
+        "flag, tableids, status, memo, sendtype, ismultiple",
         "from gyxg_orders_master",
         "where orderid = #{orderid,jdbcType=INTEGER}"
     })
@@ -66,6 +69,8 @@ public interface OrderMasterMapper extends Mapper<OrderMaster> {
         @Result(column="seatsfee", property="seatsfee", jdbcType=JdbcType.DECIMAL),
         @Result(column="tablefee", property="tablefee", jdbcType=JdbcType.DECIMAL),
         @Result(column="totalmoney", property="totalmoney", jdbcType=JdbcType.DECIMAL),
+        @Result(column="discountid", property="discountid", jdbcType=JdbcType.INTEGER),
+        @Result(column="isall", property="isall", jdbcType=JdbcType.VARCHAR),
         @Result(column="discountratio", property="discountratio", jdbcType=JdbcType.DECIMAL),
         @Result(column="discountamount", property="discountamount", jdbcType=JdbcType.DECIMAL),
         @Result(column="payamount", property="payamount", jdbcType=JdbcType.DECIMAL),
@@ -74,23 +79,21 @@ public interface OrderMasterMapper extends Mapper<OrderMaster> {
         @Result(column="employeeid", property="employeeid", jdbcType=JdbcType.INTEGER),
         @Result(column="employee1id", property="employee1id", jdbcType=JdbcType.INTEGER),
         @Result(column="overtype", property="overtype", jdbcType=JdbcType.VARCHAR),
-        @Result(column="isall", property="isall", jdbcType=JdbcType.VARCHAR),
         @Result(column="flag", property="flag", jdbcType=JdbcType.VARCHAR),
         @Result(column="tableids", property="tableids", jdbcType=JdbcType.VARCHAR),
         @Result(column="status", property="status", jdbcType=JdbcType.VARCHAR),
         @Result(column="memo", property="memo", jdbcType=JdbcType.VARCHAR),
         @Result(column="sendtype", property="sendtype", jdbcType=JdbcType.VARCHAR),
-        @Result(column="ismultiple", property="ismultiple", jdbcType=JdbcType.INTEGER),
-        @Result(column="discountid", property="discountid", jdbcType=JdbcType.INTEGER)
+        @Result(column="ismultiple", property="ismultiple", jdbcType=JdbcType.INTEGER)
     })
-    OrderMaster selectByPrimaryId(Integer orderid);
+    OrderMaster selectByPrimaryKey(Integer orderid);
 
     @Select({
         "select",
         "orderid, companyid, storeid, customerid, tableid, canduan, nums, ordertime, ",
-        "amountmoney, seatsfee, tablefee, totalmoney, discountratio, discountamount, ",
-        "payamount, alsoypay, overtime, employeeid, employee1id, overtype, flag,isall, tableids, ",
-        "status, memo, sendtype, ismultiple,discountid",
+        "amountmoney, seatsfee, tablefee, totalmoney, discountid, isall, discountratio, ",
+        "discountamount, payamount, alsoypay, overtime, employeeid, employee1id, overtype, ",
+        "flag, tableids, status, memo, sendtype, ismultiple",
         "from gyxg_orders_master"
     })
     @Results({
@@ -106,6 +109,8 @@ public interface OrderMasterMapper extends Mapper<OrderMaster> {
         @Result(column="seatsfee", property="seatsfee", jdbcType=JdbcType.DECIMAL),
         @Result(column="tablefee", property="tablefee", jdbcType=JdbcType.DECIMAL),
         @Result(column="totalmoney", property="totalmoney", jdbcType=JdbcType.DECIMAL),
+        @Result(column="discountid", property="discountid", jdbcType=JdbcType.INTEGER),
+        @Result(column="isall", property="isall", jdbcType=JdbcType.VARCHAR),
         @Result(column="discountratio", property="discountratio", jdbcType=JdbcType.DECIMAL),
         @Result(column="discountamount", property="discountamount", jdbcType=JdbcType.DECIMAL),
         @Result(column="payamount", property="payamount", jdbcType=JdbcType.DECIMAL),
@@ -114,16 +119,14 @@ public interface OrderMasterMapper extends Mapper<OrderMaster> {
         @Result(column="employeeid", property="employeeid", jdbcType=JdbcType.INTEGER),
         @Result(column="employee1id", property="employee1id", jdbcType=JdbcType.INTEGER),
         @Result(column="overtype", property="overtype", jdbcType=JdbcType.VARCHAR),
-        @Result(column="isall", property="isall", jdbcType=JdbcType.VARCHAR),
         @Result(column="flag", property="flag", jdbcType=JdbcType.VARCHAR),
         @Result(column="tableids", property="tableids", jdbcType=JdbcType.VARCHAR),
         @Result(column="status", property="status", jdbcType=JdbcType.VARCHAR),
         @Result(column="memo", property="memo", jdbcType=JdbcType.VARCHAR),
         @Result(column="sendtype", property="sendtype", jdbcType=JdbcType.VARCHAR),
-        @Result(column="ismultiple", property="ismultiple", jdbcType=JdbcType.INTEGER),
-        @Result(column="discountid", property="discountid", jdbcType=JdbcType.INTEGER)
+        @Result(column="ismultiple", property="ismultiple", jdbcType=JdbcType.INTEGER)
     })
-    List<OrderMaster> findAll();
+    List<OrderMaster> selectAll();
 
     @Update({
         "update gyxg_orders_master",
@@ -138,8 +141,9 @@ public interface OrderMasterMapper extends Mapper<OrderMaster> {
           "seatsfee = #{seatsfee,jdbcType=DECIMAL},",
           "tablefee = #{tablefee,jdbcType=DECIMAL},",
           "totalmoney = #{totalmoney,jdbcType=DECIMAL},",
+          "discountid = #{discountid,jdbcType=INTEGER},",
+          "isall = #{isall,jdbcType=VARCHAR},",
           "discountratio = #{discountratio,jdbcType=DECIMAL},",
-            "discountid = #{discountid,jdbcType=INTEGER},",
           "discountamount = #{discountamount,jdbcType=DECIMAL},",
           "payamount = #{payamount,jdbcType=DECIMAL},",
           "alsoypay = #{alsoypay,jdbcType=DECIMAL},",
@@ -147,17 +151,15 @@ public interface OrderMasterMapper extends Mapper<OrderMaster> {
           "employeeid = #{employeeid,jdbcType=INTEGER},",
           "employee1id = #{employee1id,jdbcType=INTEGER},",
           "overtype = #{overtype,jdbcType=VARCHAR},",
-            "isall = #{isall,jdbcType=VARCHAR},",
           "flag = #{flag,jdbcType=VARCHAR},",
           "tableids = #{tableids,jdbcType=VARCHAR},",
           "status = #{status,jdbcType=VARCHAR},",
           "memo = #{memo,jdbcType=VARCHAR},",
           "sendtype = #{sendtype,jdbcType=VARCHAR},",
-          "ismultiple = #{ismultiple,jdbcType=INTEGER},",
-          "discountid = #{discountid,jdbcType=INTEGER}",
+          "ismultiple = #{ismultiple,jdbcType=INTEGER}",
         "where orderid = #{orderid,jdbcType=INTEGER}"
     })
-    int updateByPrimaryId(OrderMaster record);
+    int updateByPrimaryKey(OrderMaster record);
 
     @Select("SELECT\n" +
             "\ta.orderid,a.tableid,\n" +
@@ -380,6 +382,7 @@ public interface OrderMasterMapper extends Mapper<OrderMaster> {
 
     @Select("SELECT\n" +
             "\t\tCASE when a.flag='0' THEN '结账'\n" +
+            " when a.flag='3' THEN '退款' " +
             "\tELSE '订金抵扣' END as flag,a.paytype,a.paytypedesc,b.`name`,b.phone,a.payamount,a.paytime,(SELECT c.`name` from gyxg_employees c where c.employeeid=a.employeeid) as empname,a.`status`\n" +
             "FROM\n" +
             "\tgyxg_payrecords a LEFT JOIN gyxg_customers b on a.customerid=b.customerid\n" +
@@ -391,7 +394,7 @@ public interface OrderMasterMapper extends Mapper<OrderMaster> {
             "\t\t\tgyxg_order_pays\n" +
             "\t\tWHERE\n" +
             "\t\t\torderid = #{orderid}\n" +
-            "\t) and a.flag in ('0','2')\n")
+            "\t) and a.flag in ('0','2','3')\n")
     List<Map> orderPayInfoDetail(@Param("orderid") Integer orderid);
 
 
@@ -403,4 +406,13 @@ public interface OrderMasterMapper extends Mapper<OrderMaster> {
 
     @Select("call sp_order_accounts_new(#{orderid})")
     void callsp_order_accounts_new(Integer orderid);
+
+    @Select("select " +
+            "orderid, companyid, storeid, customerid, tableid, canduan, nums, ordertime," +
+            "amountmoney, seatsfee, tablefee, totalmoney, discountid, isall, discountratio, " +
+            "discountamount, payamount, alsoypay, overtime, employeeid, employee1id, overtype, " +
+            "flag, tableids, status, memo, sendtype, ismultiple " +
+            "from gyxg_orders_master " +
+            "where orderid in (${otherid})")
+    List<OrderMaster> selectByOrderIds(@Param("otherid") String otherid);
 }

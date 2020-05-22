@@ -6,34 +6,37 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
-import tk.mybatis.mapper.common.Mapper;
 
-public interface OrderSlaveMapper extends Mapper<OrderSlave> {
+public interface OrderSlaveMapper {
     @Delete({
         "delete from gyxg_orders_slave",
         "where id = #{id,jdbcType=INTEGER}"
     })
-    int deleteByPrimaryId(Integer id);
+    int deleteByPrimaryKey(Integer id);
 
     @Insert({
         "insert into gyxg_orders_slave (orderid, disheid, ",
         "name, methodid, ",
         "unit, amount, price, ",
+        "orderamount, realamount, ",
         "memo, flag, employeeid, ",
-        "state, status)",
+        "intime, state, ",
+        "status)",
         "values (#{orderid,jdbcType=INTEGER}, #{disheid,jdbcType=INTEGER}, ",
         "#{name,jdbcType=VARCHAR}, #{methodid,jdbcType=INTEGER}, ",
         "#{unit,jdbcType=VARCHAR}, #{amount,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL}, ",
+        "#{orderamount,jdbcType=DECIMAL}, #{realamount,jdbcType=DECIMAL}, ",
         "#{memo,jdbcType=VARCHAR}, #{flag,jdbcType=VARCHAR}, #{employeeid,jdbcType=INTEGER}, ",
-        "#{state,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR})"
+        "#{intime,jdbcType=TIMESTAMP}, #{state,jdbcType=VARCHAR}, ",
+        "#{status,jdbcType=VARCHAR})"
     })
     @SelectKey(statement="SELECT LAST_INSERT_ID()", keyProperty="id", before=false, resultType=Integer.class)
-    int insert1(OrderSlave record);
+    int insert(OrderSlave record);
 
     @Select({
         "select",
-        "id, orderid, disheid, name, methodid, unit, amount, price, memo, flag, employeeid, ",
-        "state, status",
+        "id, orderid, disheid, name, methodid, unit, amount, price, orderamount, realamount, ",
+        "memo, flag, employeeid, intime, state, status",
         "from gyxg_orders_slave",
         "where id = #{id,jdbcType=INTEGER}"
     })
@@ -46,18 +49,21 @@ public interface OrderSlaveMapper extends Mapper<OrderSlave> {
         @Result(column="unit", property="unit", jdbcType=JdbcType.VARCHAR),
         @Result(column="amount", property="amount", jdbcType=JdbcType.INTEGER),
         @Result(column="price", property="price", jdbcType=JdbcType.DECIMAL),
+        @Result(column="orderamount", property="orderamount", jdbcType=JdbcType.DECIMAL),
+        @Result(column="realamount", property="realamount", jdbcType=JdbcType.DECIMAL),
         @Result(column="memo", property="memo", jdbcType=JdbcType.VARCHAR),
         @Result(column="flag", property="flag", jdbcType=JdbcType.VARCHAR),
         @Result(column="employeeid", property="employeeid", jdbcType=JdbcType.INTEGER),
+        @Result(column="intime", property="intime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="state", property="state", jdbcType=JdbcType.VARCHAR),
         @Result(column="status", property="status", jdbcType=JdbcType.VARCHAR)
     })
-    OrderSlave selectByPrimaryId(Integer id);
+    OrderSlave selectByPrimaryKey(Integer id);
 
     @Select({
         "select",
-        "id, orderid, disheid, name, methodid, unit, amount, price, memo, flag, employeeid, ",
-        "state, status",
+        "id, orderid, disheid, name, methodid, unit, amount, price, orderamount, realamount, ",
+        "memo, flag, employeeid, intime, state, status",
         "from gyxg_orders_slave"
     })
     @Results({
@@ -69,13 +75,16 @@ public interface OrderSlaveMapper extends Mapper<OrderSlave> {
         @Result(column="unit", property="unit", jdbcType=JdbcType.VARCHAR),
         @Result(column="amount", property="amount", jdbcType=JdbcType.INTEGER),
         @Result(column="price", property="price", jdbcType=JdbcType.DECIMAL),
+        @Result(column="orderamount", property="orderamount", jdbcType=JdbcType.DECIMAL),
+        @Result(column="realamount", property="realamount", jdbcType=JdbcType.DECIMAL),
         @Result(column="memo", property="memo", jdbcType=JdbcType.VARCHAR),
         @Result(column="flag", property="flag", jdbcType=JdbcType.VARCHAR),
         @Result(column="employeeid", property="employeeid", jdbcType=JdbcType.INTEGER),
+        @Result(column="intime", property="intime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="state", property="state", jdbcType=JdbcType.VARCHAR),
         @Result(column="status", property="status", jdbcType=JdbcType.VARCHAR)
     })
-    List<OrderSlave> findAll();
+    List<OrderSlave> selectAll();
 
     @Update({
         "update gyxg_orders_slave",
@@ -86,14 +95,17 @@ public interface OrderSlaveMapper extends Mapper<OrderSlave> {
           "unit = #{unit,jdbcType=VARCHAR},",
           "amount = #{amount,jdbcType=INTEGER},",
           "price = #{price,jdbcType=DECIMAL},",
+          "orderamount = #{orderamount,jdbcType=DECIMAL},",
+          "realamount = #{realamount,jdbcType=DECIMAL},",
           "memo = #{memo,jdbcType=VARCHAR},",
           "flag = #{flag,jdbcType=VARCHAR},",
           "employeeid = #{employeeid,jdbcType=INTEGER},",
+          "intime = #{intime,jdbcType=TIMESTAMP},",
           "state = #{state,jdbcType=VARCHAR},",
           "status = #{status,jdbcType=VARCHAR}",
         "where id = #{id,jdbcType=INTEGER}"
     })
-    int updateByPrimaryId(OrderSlave record);
+    int updateByPrimaryKey(OrderSlave record);
 
     @Select("select a.id,a.`name`,a.memo,a.amount,a.unit,a.flag,a.price,a.`status`,b.`code` from gyxg_orders_slave a LEFT JOIN gyxg_dishes b on a.disheid=b.disheid  where a.orderid=#{orderid} and a.status in ('0','1');")
     List<Map> selectByOrderid(Integer orderid);
@@ -198,4 +210,57 @@ public interface OrderSlaveMapper extends Mapper<OrderSlave> {
 
     @Select("select sum(amount) from gyxg_orders_slave where orderid=#{orderid} and disheid=#{disheid}")
     Integer selectByOrderidAndDishesid(@Param("orderid") Integer orderid, @Param("disheid")Integer disheid);
+
+    /**
+     * 根据结账单号获取该订单下的菜品列表信息
+     * @param msg
+     * @return
+     */
+    @Results({
+            @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
+            @Result(column="orderid", property="orderid", jdbcType=JdbcType.INTEGER),
+            @Result(column="disheid", property="disheid", jdbcType=JdbcType.INTEGER),
+            @Result(column="name", property="name", jdbcType=JdbcType.VARCHAR),
+            @Result(column="methodid", property="methodid", jdbcType=JdbcType.INTEGER),
+            @Result(column="unit", property="unit", jdbcType=JdbcType.VARCHAR),
+            @Result(column="amount", property="amount", jdbcType=JdbcType.INTEGER),
+            @Result(column="price", property="price", jdbcType=JdbcType.DECIMAL),
+            @Result(column="orderamount", property="orderamount", jdbcType=JdbcType.DECIMAL),
+            @Result(column="realamount", property="realamount", jdbcType=JdbcType.DECIMAL),
+            @Result(column="memo", property="memo", jdbcType=JdbcType.VARCHAR),
+            @Result(column="flag", property="flag", jdbcType=JdbcType.VARCHAR),
+            @Result(column="employeeid", property="employeeid", jdbcType=JdbcType.INTEGER),
+            @Result(column="intime", property="intime", jdbcType=JdbcType.TIMESTAMP),
+            @Result(column="state", property="state", jdbcType=JdbcType.VARCHAR),
+            @Result(column="status", property="status", jdbcType=JdbcType.VARCHAR)
+    })
+    @Select("select " +
+            "id, orderid, disheid, name, methodid, unit, ifnull(sum(amount), 0) amount," +
+            "price,orderamount,ifnull(sum(realamount), 0) realamount, memo, flag, employeeid, " +
+            "intime,state, status " +
+            "from gyxg_orders_slave ${msg} group by disheid")
+    List<OrderSlave> selectOrderDishesCountByOrderId(@Param("msg") String msg);
+
+    @Results({
+            @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
+            @Result(column="orderid", property="orderid", jdbcType=JdbcType.INTEGER),
+            @Result(column="disheid", property="disheid", jdbcType=JdbcType.INTEGER),
+            @Result(column="name", property="name", jdbcType=JdbcType.VARCHAR),
+            @Result(column="methodid", property="methodid", jdbcType=JdbcType.INTEGER),
+            @Result(column="unit", property="unit", jdbcType=JdbcType.VARCHAR),
+            @Result(column="amount", property="amount", jdbcType=JdbcType.INTEGER),
+            @Result(column="price", property="price", jdbcType=JdbcType.DECIMAL),
+            @Result(column="orderamount", property="orderamount", jdbcType=JdbcType.DECIMAL),
+            @Result(column="realamount", property="realamount", jdbcType=JdbcType.DECIMAL),
+            @Result(column="memo", property="memo", jdbcType=JdbcType.VARCHAR),
+            @Result(column="flag", property="flag", jdbcType=JdbcType.VARCHAR),
+            @Result(column="employeeid", property="employeeid", jdbcType=JdbcType.INTEGER),
+            @Result(column="intime", property="intime", jdbcType=JdbcType.TIMESTAMP),
+            @Result(column="state", property="state", jdbcType=JdbcType.VARCHAR),
+            @Result(column="status", property="status", jdbcType=JdbcType.VARCHAR)
+    })
+    @Select("SELECT * "+
+            "FROM gyxg_orders_slave " +
+            "WHERE flag in ('0','2') AND orderid IN (${orderid})")
+    List<OrderSlave> selectOrderSlaveAllByOrderId(@Param("orderid") String orderid);
 }

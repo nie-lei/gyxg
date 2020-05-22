@@ -72,6 +72,10 @@ public class HtmlLoginCheckInterceptor implements HandlerInterceptor {
         executorList.add("/api/report/jiesuanfangshihuizongchaxun");//结算方式汇总报表
         executorList.add("/api/report/yingyehuizong");//营业汇总报表
         executorList.add("/api/report/kaorderdetail");//优惠卡往来账目明细
+        executorList.add("/api/report/invoicing");//原料进销存报表
+
+
+        executorList.add("/api/order/getMac");//测试获取mac地址
 
     }
 

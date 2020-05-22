@@ -54,11 +54,6 @@ public class WechatLoginCheckInterceptor implements HandlerInterceptor {
                         + "&redirect_uri="
                         + buildFullRequestUrl(req, code)
                         + "&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect");
-                System.out.println("https://open.weixin.qq.com/connect/oauth2/authorize?appid="
-                        + WXInfo.APP_ID
-                        + "&redirect_uri="
-                        + buildFullRequestUrl(req, code)
-                        + "&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect");
                 return false;
             }
             //获取openid和access_token

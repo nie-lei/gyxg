@@ -6,9 +6,9 @@
     %msg——日志消息
     %n——平台的换行符-->
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
-    <property name="LOG_HOME" value="/home/logs/wyc/" />
+    <property name="LOG_HOME" value="/home/logs/gyxg/" />
     <!--<property name="LOG_HOME" value="D:/logs/wyc/" />-->
-    <property name="APP_NAME" value="wyc" />
+    <property name="APP_NAME" value="gyxg" />
     <contextName>${APP_NAME}</contextName>
 
     <!--输出到控制台 ConsoleAppender-->

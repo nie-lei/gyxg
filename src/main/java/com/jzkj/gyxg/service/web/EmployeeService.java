@@ -539,4 +539,20 @@ public class EmployeeService {
         ResponseJson resp = new ResponseJson();
         return resp;
     }
+
+    /**
+     * 根据员工id获取与员工信息
+     * @return
+     */
+    public ResponseJson selectEmpInfoById() throws AjaxOperationFailException {
+        Integer employeeid = getLoginUser().getEmployeeid();
+        if (employeeid == null || employeeid == 0) {
+            throw new AjaxOperationFailException("该账号未登录");
+        }
+        Employees employees = employeesMapper.selectByPrimaryKey(employeeid);
+        if (employees == null) {
+            throw new AjaxOperationFailException("该账号信息不存在");
+        }
+        return new ResponseJson("获取成功", employees.getDiscountamount());
+    }
 }

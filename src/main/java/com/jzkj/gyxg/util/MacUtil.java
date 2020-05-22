@@ -135,8 +135,9 @@ public class MacUtil {
 
     //做个测试
     public static void main(String[] args) {
+        System.out.println(getMacAddress("106.13.78.136").toUpperCase());
         System.out.println(getMacAddress("www.baidu.com").toUpperCase());
-//        System.out.println(getMacByIp("192.168.0.136").toUpperCase());
+//        System.out.println(getMacByIp("106.13.78.136").toUpperCase());
     }
 
 
@@ -147,7 +148,7 @@ public class MacUtil {
      * @param ip
      * @return mac
      */
-    @Deprecated
+//    @Deprecated
     public static String getMacByIp(String ip){
         String macAddress = "";
         try {

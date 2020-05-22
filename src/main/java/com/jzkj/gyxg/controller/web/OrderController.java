@@ -2,11 +2,15 @@ package com.jzkj.gyxg.controller.web;
 
 import com.jzkj.gyxg.common.HttpRequestParamter;
 import com.jzkj.gyxg.common.ResponseJson;
+import com.jzkj.gyxg.common.UtilConfig;
 import com.jzkj.gyxg.controller.BaseController;
 import com.jzkj.gyxg.entity.OrderMaster;
 import com.jzkj.gyxg.exception.AjaxOperationFailException;
 import com.jzkj.gyxg.mapper.OrderMasterMapper;
 import com.jzkj.gyxg.service.web.OrderService;
+import com.jzkj.gyxg.util.GetMAC;
+import com.jzkj.gyxg.util.HttpUtil;
+import com.jzkj.gyxg.util.MacUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +22,8 @@ public class OrderController extends BaseController {
     private OrderService orderService;
     @Autowired
     private OrderMasterMapper orderMasterMapper;
+    @Autowired
+    private UtilConfig utilConfig;
 
     /**
      *餐桌
@@ -183,6 +189,16 @@ public class OrderController extends BaseController {
         }
     }
 
+
+    /**
+     * 结账
+     * @return
+     * @throws AjaxOperationFailException
+     */
+    @RequestMapping("settleaccounts1")
+    public ResponseJson useAccount1() throws AjaxOperationFailException {
+        return orderService.useAccount1();
+    }
 
     /**
      * 结账
@@ -362,7 +378,7 @@ public class OrderController extends BaseController {
         if(tag == 0){
             throw new AjaxOperationFailException("参数缺失!");
         }
-        OrderMaster master = orderMasterMapper.selectByPrimaryId(orderid);
+        OrderMaster master = orderMasterMapper.selectByPrimaryKey(orderid);
         if(tag == 1){
             master.setIsmultiple(1);
         }else {
@@ -371,9 +387,31 @@ public class OrderController extends BaseController {
         if(master == null){
             throw new AjaxOperationFailException("订单信息不存在!");
         }
-        orderMasterMapper.updateByPrimaryId(master);
+        orderMasterMapper.updateByPrimaryKey(master);
         return orderService.printAllDishes(master,"4");
     }
 
+    /**
+     * 退款
+     * @return
+     * @throws AjaxOperationFailException
+     */
+    @RequestMapping("/refund")
+    public ResponseJson refund() throws AjaxOperationFailException{
+        return orderService.refund();
+    }
 
+
+    @RequestMapping("/getMac")
+    public ResponseJson getMac() {
+        String type = utilConfig.getTypename();
+        System.out.println(type);
+        String ip = HttpUtil.getClientIp();
+
+        if ("windows".equals(type)) {
+            return new ResponseJson(MacUtil.getMacInWindows(ip));
+        } else {
+            return new ResponseJson(MacUtil.getMacInLinux(ip));
+        }
+    }
 }

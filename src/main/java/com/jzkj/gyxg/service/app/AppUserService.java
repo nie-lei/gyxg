@@ -222,7 +222,7 @@ public class AppUserService extends BaseService {
                 orderMaster.setFlag("0");
                 orderMaster.setStatus("0");
                 orderMaster.setSendtype(sendtype);
-                orderMasterMapper.insertSelective(orderMaster);
+                orderMasterMapper.insert(orderMaster);
 
                 //修改餐桌为占用状态
                 tables.setFlag("2");
@@ -232,9 +232,9 @@ public class AppUserService extends BaseService {
                 type = "1";
                 orderid = tablesMapper.selecOrderIdByTablesId(tables.getTableid()) == null ? 0 : tablesMapper.selecOrderIdByTablesId(tables.getTableid());
                 if (peopleNum != 0) {
-                    OrderMaster orderMaster = orderMasterMapper.selectByPrimaryId(orderid);
+                    OrderMaster orderMaster = orderMasterMapper.selectByPrimaryKey(orderid);
                     orderMaster.setNums(peopleNum);
-                    orderMasterMapper.updateByPrimaryId(orderMaster);
+                    orderMasterMapper.updateByPrimaryKey(orderMaster);
                 }
             }
             if (orderid != 0) {
@@ -267,7 +267,7 @@ public class AppUserService extends BaseService {
                         dishesMapper.updateByPrimaryKey(dishesinfo);
                     }
                     orderSlaveInfo.setOrderid(orderid);
-                    orderSlaveMapper.insert1(orderSlaveInfo);
+                    orderSlaveMapper.insert(orderSlaveInfo);
 
                     //添加打印信息
                     orderPrintSlave = new OrderPrintSlave();
@@ -283,6 +283,7 @@ public class AppUserService extends BaseService {
                     orderPrintSlave.setFlag(orderSlaveInfo.getFlag());
                     orderPrintSlave.setEmployeeid(orderSlaveInfo.getEmployeeid());
                     orderPrintSlave.setStatus(orderSlaveInfo.getStatus());
+                    orderPrintSlave.setRefundmoney(0.00);
                     orderPrintSlaveMapper.insert(orderPrintSlave);
                 }
             }
@@ -370,7 +371,7 @@ public class AppUserService extends BaseService {
             return new ResponseJson("获取成功", null);
         }
 
-        OrderMaster orderMaster = orderMasterMapper.selectByPrimaryId(orderid);
+        OrderMaster orderMaster = orderMasterMapper.selectByPrimaryKey(orderid);
         if (orderMaster == null) {
             throw new AjaxOperationFailException("该餐桌信息不存在");
         }
@@ -474,7 +475,7 @@ public class AppUserService extends BaseService {
             throw new AjaxOperationFailException("请输入需要退菜份数");
         }
 
-        OrderSlave orderSlave = orderSlaveMapper.selectByPrimaryId(id);
+        OrderSlave orderSlave = orderSlaveMapper.selectByPrimaryKey(id);
         if (orderSlave == null) {
             throw new  AjaxOperationFailException("已退，请勿重复操作");
         }
@@ -491,7 +492,7 @@ public class AppUserService extends BaseService {
             throw new AjaxOperationFailException("超出已点菜品数量，剩余："+count+"份");
         }
 
-        OrderMaster orderMaster = orderMasterMapper.selectByPrimaryId(orderid);
+        OrderMaster orderMaster = orderMasterMapper.selectByPrimaryKey(orderid);
         if (orderMaster == null) {
             throw new AjaxOperationFailException("该点菜信息不存在");
         }
@@ -510,7 +511,7 @@ public class AppUserService extends BaseService {
         orderSlaveInfo.setEmployeeid(uid);
         orderSlaveInfo.setState(orderSlave.getState());
         orderSlaveInfo.setState("0");
-        orderSlaveMapper.insert1(orderSlaveInfo);
+        orderSlaveMapper.insert(orderSlaveInfo);
 
 
         //添加打印信息
@@ -545,6 +546,7 @@ public class AppUserService extends BaseService {
         orderPrintSlave.setFlag(orderSlave.getFlag());
         orderPrintSlave.setEmployeeid(orderSlave.getEmployeeid());
         orderPrintSlave.setStatus(orderSlave.getStatus());
+        orderPrintSlave.setRefundmoney(0.00);
         orderPrintSlaveMapper.insert(orderPrintSlave);
         return new ResponseJson("退菜成功");
     }
@@ -574,12 +576,12 @@ public class AppUserService extends BaseService {
         if (orderid == null) {
             return new ResponseJson(new ArrayList<>());
         }
-        OrderMaster orderMaster = orderMasterMapper.selectByPrimaryId(orderid);
+        OrderMaster orderMaster = orderMasterMapper.selectByPrimaryKey(orderid);
         if (orderMaster == null) {
             throw new AjaxOperationFailException("该餐桌信息不存在");
         }
         orderMaster.setNums(num);
-        orderMasterMapper.updateByPrimaryId(orderMaster);
+        orderMasterMapper.updateByPrimaryKey(orderMaster);
         return new ResponseJson("修改成功");
     }
 
@@ -667,7 +669,7 @@ public class AppUserService extends BaseService {
                 orderMaster.setStatus("0");
                 orderMaster.setSendtype("0");
                 orderMaster.setMemo(memo);
-                orderMasterMapper.insertSelective(orderMaster);
+                orderMasterMapper.insert(orderMaster);
 
                 //修改餐桌为占用状态
                 tables.setFlag("2");
@@ -677,10 +679,10 @@ public class AppUserService extends BaseService {
                 type = "1";
                 orderid = tablesMapper.selecOrderIdByTablesId(tables.getTableid()) == null ? 0 : tablesMapper.selecOrderIdByTablesId(tables.getTableid());
 
-                OrderMaster orderMaster = orderMasterMapper.selectByPrimaryId(orderid);
+                OrderMaster orderMaster = orderMasterMapper.selectByPrimaryKey(orderid);
                 if (peopleNum != 0) {
                     orderMaster.setNums(peopleNum);
-                    orderMasterMapper.updateByPrimaryId(orderMaster);
+                    orderMasterMapper.updateByPrimaryKey(orderMaster);
                 }
             }
             if (orderid != 0) {
@@ -705,7 +707,7 @@ public class AppUserService extends BaseService {
                 OrderPrintSlave orderPrintSlave;
                 for (OrderSlave orderSlaveInfo: orderSlaves) {
                     orderSlaveInfo.setOrderid(orderid);
-                    orderSlaveMapper.insert1(orderSlaveInfo);
+                    orderSlaveMapper.insert(orderSlaveInfo);
 
                     //添加打印信息
                     orderPrintSlave = new OrderPrintSlave();
@@ -721,6 +723,7 @@ public class AppUserService extends BaseService {
                     orderPrintSlave.setFlag(orderSlaveInfo.getFlag());
                     orderPrintSlave.setEmployeeid(orderSlaveInfo.getEmployeeid());
                     orderPrintSlave.setStatus(orderSlaveInfo.getStatus());
+                    orderPrintSlave.setRefundmoney(0.00);
                     orderPrintSlaveMapper.insert(orderPrintSlave);
                 }
             }
@@ -1020,7 +1023,7 @@ public class AppUserService extends BaseService {
             map.put("peopleNum", 0);
             map.put("memo", "");
         } else {
-            OrderMaster orderMaster = orderMasterMapper.selectByPrimaryId(orderid);
+            OrderMaster orderMaster = orderMasterMapper.selectByPrimaryKey(orderid);
             if (orderMaster == null) {
                 throw new AjaxOperationFailException("该餐桌信息不存在");
             }
@@ -1117,7 +1120,7 @@ public class AppUserService extends BaseService {
             throw new AjaxOperationFailException("该订单信息存在");
         }
 
-        OrderMaster orderMaster = orderMasterMapper.selectByPrimaryId(orderid);
+        OrderMaster orderMaster = orderMasterMapper.selectByPrimaryKey(orderid);
         if (orderMaster == null) {
             throw new AjaxOperationFailException("该餐桌信息不存在");
         }
@@ -1170,13 +1173,13 @@ public class AppUserService extends BaseService {
         payRecords.setStoreid(tables.getStoreid());
         payRecords.setCustomerid(uid);
         payRecords.setPayno(payno);
-        payRecords.setPaytype("2");
+        payRecords.setPaytype(2);
         payRecords.setPaytypedesc("2");
         payRecords.setPayamount(paymoney);
         payRecords.setFlag("0");
         payRecords.setOverflag("1");
         payRecords.setStatus("0");
-        int tag = payRecordsMapper.insert1(payRecords);
+        int tag = payRecordsMapper.insert(payRecords);
         if (tag <= 0) {
             throw new AjaxOperationFailException("录入支付信息失败，请联系工作人员");
         }
@@ -1198,7 +1201,7 @@ public class AppUserService extends BaseService {
         orderMaster.setTotalmoney(paymoney);
         orderMaster.setDiscountamount(0.0);
         orderMaster.setPayamount(paymoney);
-        tag = orderMasterMapper.updateByPrimaryId(orderMaster);
+        tag = orderMasterMapper.updateByPrimaryKey(orderMaster);
         if (tag <= 0) {
             throw new AjaxOperationFailException("修改订单信息失败，请联系工作人员");
         }
@@ -1264,7 +1267,7 @@ public class AppUserService extends BaseService {
                         if (orderPays == null) {
                             continue;
                         }
-                        orderMaster = orderMasterMapper.selectByPrimaryId(orderPays.getOrderid());
+                        orderMaster = orderMasterMapper.selectByPrimaryKey(orderPays.getOrderid());
                         if (orderMaster == null || !"1".equals(orderMaster.getStatus())) {
                             continue;
                         }
@@ -1279,14 +1282,14 @@ public class AppUserService extends BaseService {
                         orderService.updateMasterAndTables(orderMaster, orderMaster.getIsmultiple() == null ? 1: orderMaster.getIsmultiple());
                         //2。修改订单状态为结账
                         orderMaster.setStatus("3");
-                        orderMasterMapper.updateByPrimaryId(orderMaster);
+                        orderMasterMapper.updateByPrimaryKey(orderMaster);
                         //3。修改支付信息
                         payRecords.setPaytime(date);
                         payRecords.setOverflag("0");
                         payRecords.setStatus("1");
                         payRecords.setReturnno(result.get("sn") + "");
                         payRecords.setPaystatus(result.get("order_status") + "");
-                        payRecordsMapper.updateByPrimaryId(payRecords);
+                        payRecordsMapper.updateByPrimaryKey(payRecords);
                         //4。修改支付结账信息
                         orderPays.setOktime(date);
                         orderPaysMapper.updateByPrimaryId(orderPays);
@@ -1318,7 +1321,7 @@ public class AppUserService extends BaseService {
                         if (orderPays == null) {
                             continue;
                         }
-                        orderMaster = orderMasterMapper.selectByPrimaryId(orderPays.getOrderid());
+                        orderMaster = orderMasterMapper.selectByPrimaryKey(orderPays.getOrderid());
                         if (orderMaster == null || !"1".equals(orderMaster.getStatus())) {
                             continue;
                         }
@@ -1328,14 +1331,14 @@ public class AppUserService extends BaseService {
                         }
                         //2。修改订单状态为开台
                         orderMaster.setStatus("0");
-                        orderMasterMapper.updateByPrimaryId(orderMaster);
+                        orderMasterMapper.updateByPrimaryKey(orderMaster);
                         //3。修改支付信息
                         payRecords.setPaytime(date);
                         payRecords.setOverflag("1");
                         payRecords.setStatus("2");
                         payRecords.setReturnno(result.get("sn") + "");
                         payRecords.setPaystatus(result.get("order_status") + "");
-                        payRecordsMapper.updateByPrimaryId(payRecords);
+                        payRecordsMapper.updateByPrimaryKey(payRecords);
                     } else {
                         list.add(payNo);
                     }

@@ -16,13 +16,13 @@ public class Tables extends BaseEntity {
 
     private Integer seats;
 
-    private double minmoney;
+    private Double minmoney;
 
-    private double fixedfee;
+    private Double fixedfee;
 
-    private double ratiofee;
+    private Double ratiofee;
 
-    private double seatfee;
+    private Double seatfee;
 
     private String memo;
 
@@ -88,35 +88,35 @@ public class Tables extends BaseEntity {
         this.seats = seats;
     }
 
-    public double getMinmoney() {
+    public Double getMinmoney() {
         return minmoney;
     }
 
-    public void setMinmoney(double minmoney) {
+    public void setMinmoney(Double minmoney) {
         this.minmoney = minmoney;
     }
 
-    public double getFixedfee() {
+    public Double getFixedfee() {
         return fixedfee;
     }
 
-    public void setFixedfee(double fixedfee) {
+    public void setFixedfee(Double fixedfee) {
         this.fixedfee = fixedfee;
     }
 
-    public double getRatiofee() {
+    public Double getRatiofee() {
         return ratiofee;
     }
 
-    public void setRatiofee(double ratiofee) {
+    public void setRatiofee(Double ratiofee) {
         this.ratiofee = ratiofee;
     }
 
-    public double getSeatfee() {
+    public Double getSeatfee() {
         return seatfee;
     }
 
-    public void setSeatfee(double seatfee) {
+    public void setSeatfee(Double seatfee) {
         this.seatfee = seatfee;
     }
 

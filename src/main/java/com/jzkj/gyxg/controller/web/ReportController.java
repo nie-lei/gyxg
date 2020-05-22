@@ -101,5 +101,15 @@ public class ReportController extends BaseController {
         return reportService.kaorderdetail();
     }
 
+    /**
+     * 原料进销存报表
+     * @return
+     * @throws AjaxOperationFailException
+     */
+    @RequestMapping("invoicing")
+    public ResponseJson invoicing () throws AjaxOperationFailException {
+        return reportService.invoicing();
+    }
+
 
 }

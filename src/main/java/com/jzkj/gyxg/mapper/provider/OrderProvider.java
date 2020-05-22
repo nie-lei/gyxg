@@ -34,6 +34,7 @@ public class OrderProvider {
                 "\ta.overtype,\n" +
                 "\ta.`status`,\n" +
                 "\ta.employeeid,\n" +
+                "\ta.ismultiple,\n" +
                 "\t(SELECT c.name from gyxg_employees c where c.employeeid=a.employeeid) as empname,\n" +
                 "\ta.employee1id,\n" +
                 "\t(SELECT d.name from gyxg_employees d where d.employeeid=a.employee1id) as emp1name\n" +

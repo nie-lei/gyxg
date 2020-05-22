@@ -1,7 +1,5 @@
 package com.jzkj.gyxg.entity;
 
-import java.math.BigDecimal;
-
 public class OrderPrint extends BaseEntity {
     private Integer id;
 
@@ -19,7 +17,7 @@ public class OrderPrint extends BaseEntity {
 
     private Integer methodid;
 
-    private BigDecimal price;
+    private Double price;
 
     private String memo;
 
@@ -97,11 +95,11 @@ public class OrderPrint extends BaseEntity {
         this.methodid = methodid;
     }
 
-    public BigDecimal getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

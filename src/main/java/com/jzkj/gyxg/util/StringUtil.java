@@ -424,7 +424,7 @@ public final class StringUtil {
      */
     public static int toInt(String str) {
         try {
-            return (new BigDecimal(str)).intValue();
+            return (new Double(str)).intValue();
         } catch (Exception e) {
             return 0;
         }
@@ -438,7 +438,7 @@ public final class StringUtil {
      */
     public static long toLong(String str) {
         try {
-            return (new BigDecimal(str)).longValue();
+            return (new Double(str)).longValue();
         } catch (Exception e) {
             return 0;
         }
@@ -452,7 +452,7 @@ public final class StringUtil {
      */
     public static float toFloat(String str) {
         try {
-            return (new BigDecimal(str)).floatValue();
+            return (new Double(str)).floatValue();
         } catch (Exception e) {
             return 0f;
         }
@@ -1110,7 +1110,7 @@ public final class StringUtil {
         nf.setMinimumFractionDigits(len);
         nf.setGroupingUsed(false);
 
-        return nf.format((new BigDecimal(str)).floatValue());
+        return nf.format((new Double(str)).floatValue());
     }
 
     public static String urlencode(String str) {

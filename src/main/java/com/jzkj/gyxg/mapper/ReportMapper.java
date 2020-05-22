@@ -190,4 +190,12 @@ public interface ReportMapper {
 
     @SelectProvider(type = ReportProvider.class,method = "kaorderdetail")
     List<Map> kaorderdetail(Map params);
+
+    /**
+     * 原料进销存报表
+     * @param map
+     * @return
+     */
+    @Select("call sp_kucunjinxiaocunchaxun (#{companyid},#{storeid},#{warehouseid},#{begin_date},#{end_date})")
+    List<Map<String,Object>> invoicing(Map<String, Object> map);
 }

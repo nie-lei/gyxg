@@ -1,5 +1,7 @@
 package com.jzkj.gyxg.entity;
 
+import java.math.BigDecimal;
+
 public class OrderPrintSlave extends BaseEntity {
     private Integer id;
 
@@ -18,6 +20,8 @@ public class OrderPrintSlave extends BaseEntity {
     private Integer methodid;
 
     private Double price;
+
+    private Double refundmoney;
 
     private String memo;
 
@@ -97,6 +101,14 @@ public class OrderPrintSlave extends BaseEntity {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public Double getRefundmoney() {
+        return refundmoney;
+    }
+
+    public void setRefundmoney(Double refundmoney) {
+        this.refundmoney = refundmoney;
     }
 
     public String getMemo() {

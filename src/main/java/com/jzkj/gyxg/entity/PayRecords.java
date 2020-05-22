@@ -1,8 +1,8 @@
 package com.jzkj.gyxg.entity;
 
-import javax.persistence.Table;
+import java.math.BigDecimal;
 import java.util.Date;
-@Table(name = "gyxg_payrecords")
+
 public class PayRecords extends BaseEntity {
     private Integer payid;
 
@@ -14,15 +14,17 @@ public class PayRecords extends BaseEntity {
 
     private String payno;
 
-    private String paytype;
+    private Integer paytype;
 
     private String paytypedesc;
 
-    private double payamount;
+    private Integer paynum;
+
+    private Double payamount;
 
     private Date paytime;
 
-    private double returnamount;
+    private Double returnamount;
 
     private Date returntime;
 
@@ -82,11 +84,11 @@ public class PayRecords extends BaseEntity {
         this.payno = payno;
     }
 
-    public String getPaytype() {
+    public Integer getPaytype() {
         return paytype;
     }
 
-    public void setPaytype(String paytype) {
+    public void setPaytype(Integer paytype) {
         this.paytype = paytype;
     }
 
@@ -98,11 +100,19 @@ public class PayRecords extends BaseEntity {
         this.paytypedesc = paytypedesc;
     }
 
-    public double getPayamount() {
+    public Integer getPaynum() {
+        return paynum;
+    }
+
+    public void setPaynum(Integer paynum) {
+        this.paynum = paynum;
+    }
+
+    public Double getPayamount() {
         return payamount;
     }
 
-    public void setPayamount(double payamount) {
+    public void setPayamount(Double payamount) {
         this.payamount = payamount;
     }
 
@@ -114,11 +124,11 @@ public class PayRecords extends BaseEntity {
         this.paytime = paytime;
     }
 
-    public double getReturnamount() {
+    public Double getReturnamount() {
         return returnamount;
     }
 
-    public void setReturnamount(double returnamount) {
+    public void setReturnamount(Double returnamount) {
         this.returnamount = returnamount;
     }
 

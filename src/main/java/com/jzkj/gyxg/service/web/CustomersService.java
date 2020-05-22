@@ -700,7 +700,7 @@ public class CustomersService {
         if(orderid == 0){
             throw new AjaxOperationFailException("订单id缺失！");
         }
-        OrderMaster orderMaster = masterMapper.selectByPrimaryId(orderid);
+        OrderMaster orderMaster = masterMapper.selectByPrimaryKey(orderid);
         if(orderMaster == null){
             throw new AjaxOperationFailException("订单信息不存在！");
         }
@@ -784,17 +784,17 @@ public class CustomersService {
         payRecords.setPayno(uuid);
         payRecords.setMemo(memo);
         if(paytype == 0){//现金
-            payRecords.setPaytype("0");
+            payRecords.setPaytype(3);
             payRecords.setPaytypedesc("0");
             payRecords.setStatus("1");
         }
         if(paytype == 1 || paytype == 2){//支付宝或者微信
             Map map = orderService.pay(uuid,orderService.yuanTofen(payamount),code);
             if(paytype == 2){//微信
-                payRecords.setPaytype("2");
+                payRecords.setPaytype(2);
                 payRecords.setPaytypedesc("2");
             }else {
-                payRecords.setPaytype("2");//支付方式：0-现金 1-pos机  2-收钱吧 3-余额
+                payRecords.setPaytype(1);//支付方式：0-现金 1-pos机  2-收钱吧 3-余额
                 payRecords.setPaytypedesc("1");//支付详细方式： //0：现金 1：支付宝  2：微信 6：余额 7 :银行卡
             }
             if(map.get("result_code").equals("200") && !map.get("pay_code").equals("PAY_FAIL")){//成功
@@ -810,8 +810,7 @@ public class CustomersService {
             }else {
                 throw new AjaxOperationFailException("支付失败！");
             }
-        }
-        if(paytype == 6){//余额
+        } else if(paytype == 6){//余额
             if(flag.equals("2")){
                 payRecords.setOverflag("1");//结算标识：0-已结算，1-未结算
                 CustomersAccounts accounts = accountsMapper.selectByCusId(customerid);
@@ -829,7 +828,7 @@ public class CustomersService {
                 //修改账户余额
                 accounts.setGroupbalance(groupbalance-payamount);
                 accountsMapper.updateByPrimaryKey(accounts);
-                payRecords.setPaytype("3");
+                payRecords.setPaytype(3);
                 payRecords.setPaytypedesc("6");
                 payRecords.setStatus("1");
                 CustomersLogs logs = new CustomersLogs();
@@ -846,9 +845,8 @@ public class CustomersService {
             }else {
                 throw new AjaxOperationFailException("充值不能用余额支付!");
             }
-        }
-        if(paytype == 7){//银行卡支付
-            payRecords.setPaytype("1");
+        } else if(paytype == 7){//银行卡支付
+            payRecords.setPaytype(4);
             payRecords.setPaytypedesc("7");
             payRecords.setStatus("1");
         }
@@ -858,7 +856,7 @@ public class CustomersService {
         if("2".equals(flag)){//订金
             payRecords.setOverflag("1");//结算标识：0-已结算，1-未结算
         }
-        payRecordsMapper.insert1(payRecords);
+        payRecordsMapper.insert(payRecords);
         if("1".equals(flag)){//充值
             Invests invests = new Invests();
             invests.setCompanyid(employeeService.getLoginUser().getCompanyid());
@@ -959,7 +957,7 @@ public class CustomersService {
         if(payid == 0){
             throw new AjaxOperationFailException("支付id不能为空!");
         }
-        PayRecords records = payRecordsMapper.selectByPrimaryId(payid);
+        PayRecords records = payRecordsMapper.selectByPrimaryKey(payid);
         if(records == null){
             throw new AjaxOperationFailException("订金信息不存在!");
         }
@@ -982,7 +980,7 @@ public class CustomersService {
             accountsMapper.updateByPrimaryKey(accounts);
         }
         records.setOverflag("0");//订金使用了
-        payRecordsMapper.updateByPrimaryId(records);
+        payRecordsMapper.updateByPrimaryKey(records);
         CustomersAccounts ac = accountsMapper.selectByCusId(customerid);
         CustomersLogs logs = new CustomersLogs();
         logs.setCompanyid(employeeService.getLoginUser().getCompanyid());
@@ -1046,7 +1044,7 @@ public class CustomersService {
         if(payid == 0){
             throw new AjaxOperationFailException("支付id不能为空!");
         }
-        PayRecords records = payRecordsMapper.selectByPrimaryId(payid);
+        PayRecords records = payRecordsMapper.selectByPrimaryKey(payid);
         if(records == null){
             throw new AjaxOperationFailException("订金信息不存在!");
         }
@@ -1101,7 +1099,7 @@ public class CustomersService {
             logs.setEmployeeid(employeeService.getLoginUser().getEmployeeid());
             logsMapper.insert(logs);
         }
-        payRecordsMapper.updateByPrimaryId(records);
+        payRecordsMapper.updateByPrimaryKey(records);
         return resp;
     }
 
@@ -1124,7 +1122,7 @@ public class CustomersService {
         }
         invests.setStatus("3");
         investsMapper.updateByPrimaryKey(invests);
-        PayRecords records = payRecordsMapper.selectByPrimaryId(invests.getPayid());
+        PayRecords records = payRecordsMapper.selectByPrimaryKey(invests.getPayid());
         if(records == null){
             throw new AjaxOperationFailException("付款信息不存在!");
         }
@@ -1176,7 +1174,7 @@ public class CustomersService {
         logs.setIntime(new Date());
         logs.setEmployeeid(employeeService.getLoginUser().getEmployeeid());
         logsMapper.insert(logs);
-        payRecordsMapper.updateByPrimaryId(records);
+        payRecordsMapper.updateByPrimaryKey(records);
         return resp;
     }
 
@@ -1259,7 +1257,7 @@ public class CustomersService {
         if(payid == 0){
             throw new AjaxOperationFailException("缺失id");
         }
-        PayRecords payRecords = payRecordsMapper.selectByPrimaryId(payid);
+        PayRecords payRecords = payRecordsMapper.selectByPrimaryKey(payid);
         if(payRecords == null){
             throw new AjaxOperationFailException("订金信息不存在");
         }
@@ -1268,7 +1266,7 @@ public class CustomersService {
         }
         payRecords.setOverflag("0");
         payRecords.setMemo("违约扣除订金"+memo);
-        payRecordsMapper.updateByPrimaryId(payRecords);
+        payRecordsMapper.updateByPrimaryKey(payRecords);
         return new ResponseJson("订金扣除成功");
     }
 

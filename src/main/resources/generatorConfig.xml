@@ -11,9 +11,9 @@
         </commentGenerator>
 
         <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
-                        connectionURL="jdbc:mysql://106.12.221.18:3306/gyxg_huoge"
-                        userId="Jzkj_tgcx"
-                        password="Tgcx_123@45k6" />
+                        connectionURL="jdbc:mysql://192.168.0.41:3308/gyxg_huoge"
+                        userId="root"
+                        password="Jzkj_123456" />
 
         <javaModelGenerator targetPackage="com.jzkj.gyxg.entity" targetProject="src/main/java">
             <property name="rootClass" value="com.jzkj.gyxg.entity.BaseEntity"/>
@@ -29,7 +29,7 @@
 
         <!--<table tableName="gyxg_dishe_classifys" domainObjectName="DishesClassfys">-->
             <!--<generatedKey column="classifyid" sqlStatement="MySql" identity="true"/>-->
-        <table tableName="gyxg_customers_logs" domainObjectName="CustomersLogs">
+        <table tableName="gyxg_orderprint_slave" domainObjectName="OrderPrintSlave">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
 

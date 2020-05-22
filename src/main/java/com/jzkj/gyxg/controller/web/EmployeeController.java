@@ -74,4 +74,12 @@ public class EmployeeController extends BaseController {
         return employeeService.home();
     }
 
+    /**
+     * 获取当前登录用户最高可限免金额
+     * @return
+     */
+    @RequestMapping("/getDiscountamount")
+    public ResponseJson getDiscountamount() throws AjaxOperationFailException {
+        return employeeService.selectEmpInfoById();
+    }
 }

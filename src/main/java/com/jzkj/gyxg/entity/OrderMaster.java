@@ -1,12 +1,8 @@
 package com.jzkj.gyxg.entity;
 
-import javax.persistence.Id;
-import javax.persistence.Table;
 import java.util.Date;
 
-@Table(name = "gyxg_orders_master")
 public class OrderMaster extends BaseEntity {
-    @Id
     private Integer orderid;
 
     private Integer companyid;
@@ -31,15 +27,9 @@ public class OrderMaster extends BaseEntity {
 
     private Double totalmoney;
 
+    private Integer discountid;
+
     private String isall;
-
-    public String getIsall() {
-        return isall;
-    }
-
-    public void setIsall(String isall) {
-        this.isall = isall;
-    }
 
     private Double discountratio;
 
@@ -68,20 +58,6 @@ public class OrderMaster extends BaseEntity {
     private String sendtype;
 
     private Integer ismultiple;
-
-    private Integer discountid;//打折id
-
-    public void setIsmultiple(Integer ismultiple) {
-        this.ismultiple = ismultiple;
-    }
-
-    public Integer getDiscountid() {
-        return discountid;
-    }
-
-    public void setDiscountid(Integer discountid) {
-        this.discountid = discountid;
-    }
 
     public Integer getOrderid() {
         return orderid;
@@ -177,6 +153,22 @@ public class OrderMaster extends BaseEntity {
 
     public void setTotalmoney(Double totalmoney) {
         this.totalmoney = totalmoney;
+    }
+
+    public Integer getDiscountid() {
+        return discountid;
+    }
+
+    public void setDiscountid(Integer discountid) {
+        this.discountid = discountid;
+    }
+
+    public String getIsall() {
+        return isall;
+    }
+
+    public void setIsall(String isall) {
+        this.isall = isall;
     }
 
     public Double getDiscountratio() {
@@ -287,7 +279,41 @@ public class OrderMaster extends BaseEntity {
         return ismultiple;
     }
 
-    public void setIsmultiple(int ismultiple) {
+    public void setIsmultiple(Integer ismultiple) {
         this.ismultiple = ismultiple;
+    }
+
+    @Override
+    public String toString() {
+        return "OrderMaster{" +
+                "orderid=" + orderid +
+                ", companyid=" + companyid +
+                ", storeid=" + storeid +
+                ", customerid=" + customerid +
+                ", tableid=" + tableid +
+                ", canduan='" + canduan + '\'' +
+                ", nums=" + nums +
+                ", ordertime=" + ordertime +
+                ", amountmoney=" + amountmoney +
+                ", seatsfee=" + seatsfee +
+                ", tablefee=" + tablefee +
+                ", totalmoney=" + totalmoney +
+                ", discountid=" + discountid +
+                ", isall='" + isall + '\'' +
+                ", discountratio=" + discountratio +
+                ", discountamount=" + discountamount +
+                ", payamount=" + payamount +
+                ", alsoypay=" + alsoypay +
+                ", overtime=" + overtime +
+                ", employeeid=" + employeeid +
+                ", employee1id=" + employee1id +
+                ", overtype='" + overtype + '\'' +
+                ", flag='" + flag + '\'' +
+                ", tableids='" + tableids + '\'' +
+                ", status='" + status + '\'' +
+                ", memo='" + memo + '\'' +
+                ", sendtype='" + sendtype + '\'' +
+                ", ismultiple=" + ismultiple +
+                '}';
     }
 }

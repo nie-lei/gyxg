@@ -22,21 +22,23 @@ public interface OrderPrintSlaveMapper {
         "insert into gyxg_orderprint_slave (orderid, tablesid, ",
         "disheid, name, unit, ",
         "amount, methodid, ",
-        "price, memo, flag, ",
-        "employeeid, status)",
+        "price, refundmoney, ",
+        "memo, flag, employeeid, ",
+        "status)",
         "values (#{orderid,jdbcType=INTEGER}, #{tablesid,jdbcType=INTEGER}, ",
         "#{disheid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, ",
         "#{amount,jdbcType=INTEGER}, #{methodid,jdbcType=INTEGER}, ",
-        "#{price,jdbcType=DECIMAL}, #{memo,jdbcType=VARCHAR}, #{flag,jdbcType=VARCHAR}, ",
-        "#{employeeid,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR})"
+        "#{price,jdbcType=DECIMAL}, #{refundmoney,jdbcType=DECIMAL}, ",
+        "#{memo,jdbcType=VARCHAR}, #{flag,jdbcType=VARCHAR}, #{employeeid,jdbcType=INTEGER}, ",
+        "#{status,jdbcType=VARCHAR})"
     })
     @SelectKey(statement="SELECT LAST_INSERT_ID()", keyProperty="id", before=false, resultType=Integer.class)
     int insert(OrderPrintSlave record);
 
     @Select({
         "select",
-        "id, orderid, tablesid, disheid, name, unit, amount, methodid, price, memo, flag, ",
-        "employeeid, status",
+        "id, orderid, tablesid, disheid, name, unit, amount, methodid, price, refundmoney, ",
+        "memo, flag, employeeid, status",
         "from gyxg_orderprint_slave",
         "where id = #{id,jdbcType=INTEGER}"
     })
@@ -50,6 +52,7 @@ public interface OrderPrintSlaveMapper {
         @Result(column="amount", property="amount", jdbcType=JdbcType.INTEGER),
         @Result(column="methodid", property="methodid", jdbcType=JdbcType.INTEGER),
         @Result(column="price", property="price", jdbcType=JdbcType.DECIMAL),
+        @Result(column="refundmoney", property="refundmoney", jdbcType=JdbcType.DECIMAL),
         @Result(column="memo", property="memo", jdbcType=JdbcType.VARCHAR),
         @Result(column="flag", property="flag", jdbcType=JdbcType.VARCHAR),
         @Result(column="employeeid", property="employeeid", jdbcType=JdbcType.INTEGER),
@@ -59,8 +62,8 @@ public interface OrderPrintSlaveMapper {
 
     @Select({
         "select",
-        "id, orderid, tablesid, disheid, name, unit, amount, methodid, price, memo, flag, ",
-        "employeeid, status",
+        "id, orderid, tablesid, disheid, name, unit, amount, methodid, price, refundmoney, ",
+        "memo, flag, employeeid, status",
         "from gyxg_orderprint_slave"
     })
     @Results({
@@ -73,6 +76,7 @@ public interface OrderPrintSlaveMapper {
         @Result(column="amount", property="amount", jdbcType=JdbcType.INTEGER),
         @Result(column="methodid", property="methodid", jdbcType=JdbcType.INTEGER),
         @Result(column="price", property="price", jdbcType=JdbcType.DECIMAL),
+        @Result(column="refundmoney", property="refundmoney", jdbcType=JdbcType.DECIMAL),
         @Result(column="memo", property="memo", jdbcType=JdbcType.VARCHAR),
         @Result(column="flag", property="flag", jdbcType=JdbcType.VARCHAR),
         @Result(column="employeeid", property="employeeid", jdbcType=JdbcType.INTEGER),
@@ -90,6 +94,7 @@ public interface OrderPrintSlaveMapper {
           "amount = #{amount,jdbcType=INTEGER},",
           "methodid = #{methodid,jdbcType=INTEGER},",
           "price = #{price,jdbcType=DECIMAL},",
+          "refundmoney = #{refundmoney,jdbcType=DECIMAL},",
           "memo = #{memo,jdbcType=VARCHAR},",
           "flag = #{flag,jdbcType=VARCHAR},",
           "employeeid = #{employeeid,jdbcType=INTEGER},",

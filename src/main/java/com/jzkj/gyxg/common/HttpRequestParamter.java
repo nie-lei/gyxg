@@ -70,7 +70,7 @@ public final class HttpRequestParamter {
             return defaultValue;
         }
 
-        return (new BigDecimal(paramValue)).longValue();
+        return (new Double(paramValue)).longValue();
     }
 
     public static double getDouble(String paramName, double defaultValue){
@@ -79,7 +79,7 @@ public final class HttpRequestParamter {
         if (StringUtil.isNull(paramValue)) {
             return defaultValue;
         }
-        return (new BigDecimal(paramValue)).doubleValue();
+        return (new Double(paramValue)).doubleValue();
     }
 
     public static double getDouble(String paramName){
@@ -98,7 +98,7 @@ public final class HttpRequestParamter {
             return defaultValue;
         }
 
-        return (new BigDecimal(paramValue)).intValue();
+        return (new Double(paramValue)).intValue();
     }
 
     public static Byte getByte(String paramName) {
@@ -114,7 +114,7 @@ public final class HttpRequestParamter {
             return defaultValue;
         }
 
-        return (new BigDecimal(paramValue)).byteValue();
+        return (new Double(paramValue)).byteValue();
     }
 
     public static int[] getIntegerArray(String paramName) {
